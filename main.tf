@@ -7,10 +7,16 @@ terraform {
   }
 }
 
+variable "cluster_name" {
+  default = "test-cluster"
+  type = string
+  description = "Name of the K3D cluster"
+}
+
 provider "kubernetes" {
   # Configuration options
   config_path    = "~/.kube/config"
-  config_context = "k3d-test-cluster"
+  config_context = "k3d-${var.cluster_name}"
 }
 
 locals {
