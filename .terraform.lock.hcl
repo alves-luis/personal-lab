@@ -1,22 +1,24 @@
 # This file is maintained automatically by "terraform init".
 # Manual edits may be lost in future updates.
 
-provider "registry.terraform.io/hashicorp/kubernetes" {
-  version     = "2.21.1"
-  constraints = "2.21.1"
+provider "registry.terraform.io/scaleway/scaleway" {
+  version     = "2.57.0"
+  constraints = "2.57.0"
   hashes = [
-    "h1:2spGoBcGDQ/Csc23bddCfM21zyKx3PONoiqRgmuChnM=",
-    "zh:156a437d7edd6813e9cb7bdff16ebce28cec08b07ba1b0f5e9cec029a217bc27",
-    "zh:1a21c255d8099e303560e252579c54e99b5f24f2efde772c7e39502c62472605",
-    "zh:27b2021f86e5eaf6b9ee7c77d7a9e32bc496e59dd0808fb15a5687879736acf6",
-    "zh:31fa284c1c873a85c3b5cfc26cf7e7214d27b3b8ba7ea5134ab7d53800894c42",
-    "zh:4be9cc1654e994229c0d598f4e07487fc8b513337de9719d79b45ce07fc4e123",
-    "zh:5f684ed161f54213a1414ac71b3971a527c3a6bfbaaf687a7c8cc39dcd68c512",
-    "zh:6d58f1832665c256afb68110c99c8112926406ae0b64dd5f250c2954fc26928e",
-    "zh:9dadfa4a019d1e90decb1fab14278ee2dbefd42e8f58fe7fa567a9bf51b01e0e",
-    "zh:a68ce7208a1ef4502528efb8ce9f774db56c421dcaccd3eb10ae68f1324a6963",
-    "zh:acdd5b45a7e80bc9d254ad0c2f9cb4715104117425f0d22409685909a790a6dd",
-    "zh:f569b65999264a9416862bca5cd2a6177d94ccb0424f3a4ef424428912b9cb3c",
-    "zh:fb451e882118fe92e1cb2e60ac2d77592f5f7282b3608b878b5bdc38bbe4fd5b",
+    "h1:qKry26ew6YmWp3lW17OrOQNBSFDZxcwgP7i2RSYCLYg=",
+    "zh:0103da0361dd2ab2070f81177f74b966ccb035d0844bd53a8142a65755b2a450",
+    "zh:1b320f7b14d1c02e69edd7c80e7302388c9e57f7e267ed0e970d5d5d72121800",
+    "zh:5809fcf874d9ddbdd4a4045cf398a7150c2ebb35e03b64824b70bf9f023efdd4",
+    "zh:699c4311145a1ff473f2d5629c9404aed007c2c952758497aadba17f96f7b49c",
+    "zh:6bda0f6a7069f3e70c1e53c18dbf2247a2bf19eeffad87209265fa2e8a86221a",
+    "zh:8ef2c885a048c90ce22dc3498756ad49b1a21c542ca6f3cf4093358970179e11",
+    "zh:92d2786ef3960470798fe45d5db58b72dbe8cc17ae8e6f93f444bf729f050690",
+    "zh:a5f6532fbac9913d8ec6f3983cda352d240fb271c3251057daf22571b9924e4f",
+    "zh:aa8c5b2c85e7ca3d972188f7d88f0f2c024a0e50da415d47f2b6b29082409857",
+    "zh:b0e411083a148acdf55994b7ac4fc18d7d02263392b4e2dc9402eed56077e706",
+    "zh:d73bbac9d7e02c4289105b8a6066532c5c87d901871c60aa7cd8002fca3eb312",
+    "zh:db6b0a7d7769e486f250fe83f68b6934819740b1811a84c22dccf8d333a7d738",
+    "zh:e0c22157a197d28091e402bc5914c6b95eb040efbbca1ae760d2f2c601ee0351",
+    "zh:f36830f3232a15c3ee06cab2fa1896e87b419bdd5f584aa06ebdffba582eae88",
   ]
 }

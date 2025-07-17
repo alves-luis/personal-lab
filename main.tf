@@ -1,115 +1,37 @@
-terraform {
-  required_providers {
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-      version = "2.21.1"
-    }
+resource "scaleway_iam_application" "truenas" {
+  name        = "TrueNAS"
+  description = "Application for TrueNAS to access Scaleway resources."
+  organization_id = var.organization_id
+}
+
+resource scaleway_iam_policy "truenas_manage_s3" {
+  name           = "TrueNAS S3 Management Policy"
+  description    = "Gives TrueNAS permissions to upload/download objects in the S3 bucket."
+  application_id = scaleway_iam_application.truenas.id
+  organization_id = var.organization_id
+  rule {
+    project_ids          = [var.project_id]
+    permission_set_names = [
+      "ObjectStorageObjectsWrite",
+      "ObjectStorageObjectsDelete",
+      "ObjectStorageObjectsRead",
+      "ObjectStorageBucketsRead",
+      "ObjectStorageReadOnly"
+    ]
   }
 }
 
-variable "cluster_name" {
-  default = "test-cluster"
-  type = string
-  description = "Name of the K3D cluster"
-}
+resource "scaleway_object_bucket" "truenas_backup" {
+  name       = "lal-truenas-backup"
+  project_id = var.project_id
 
-provider "kubernetes" {
-  # Configuration options
-  config_path    = "~/.kube/config"
-  config_context = "k3d-${var.cluster_name}"
-}
+  lifecycle_rule {
+    id      = "to-glacier-monthly"
+    enabled = true
 
-locals {
-  nginx_app_label = "NginxMetal"
-}
-
-resource "kubernetes_deployment" "nginx" {
-  metadata {
-    name = "nginx-metal"
-    labels = {
-      app = "NginxMetal"
-    }
-  }
-
-  spec {
-    replicas = 5
-    selector {
-      match_labels = {
-        app = local.nginx_app_label
-      }
-    }
-    template {
-      metadata {
-        labels = {
-          app = local.nginx_app_label
-        }
-      }
-      spec {
-        container {
-          image = "nginx"
-          name  = "nginx"
-
-          port {
-            container_port = 80
-          }
-
-          resources {
-            limits = {
-              cpu    = "0.5"
-              memory = "128Mi"
-            }
-            requests = {
-              cpu    = "0.25"
-              memory = "50Mi"
-            }
-          }
-        }
-      }
+    transition {
+      days          = 30
+      storage_class = "GLACIER"
     }
   }
 }
-
-resource "kubernetes_service" "nginx" {
-  metadata {
-    name = "nginx-metal-svc"
-  }
-  spec {
-    selector = {
-      app = local.nginx_app_label
-    }
-    
-    port {
-      port = "80"
-      target_port = "80"
-      protocol = "TCP"
-    }
-
-    type = "ClusterIP"
-  }
-}
-
-resource "kubernetes_ingress_v1" "nginx_ingress" {
-  metadata {
-    name = "nginx-ingress"
-  }
-
-  spec {
-    rule {
-      http {
-        path {
-          backend {
-            service {
-              name = kubernetes_service.nginx.metadata[0].name
-              port {
-                number = 80
-              }
-            }
-          }
-          path = "/"
-          path_type = "Prefix"
-        }
-      }
-    }
-  }
-}
-
