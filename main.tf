@@ -26,11 +26,11 @@ resource "scaleway_object_bucket" "truenas_backup" {
   project_id = var.project_id
 
   lifecycle_rule {
-    id      = "to-glacier-monthly"
+    id      = "to-glacier-weekly"
     enabled = true
 
     transition {
-      days          = 30
+      days          = 7
       storage_class = "GLACIER"
     }
   }
