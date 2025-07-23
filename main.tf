@@ -59,15 +59,23 @@ resource "scaleway_instance_security_group" "headscale" {
   zone = local.headscale_zone
   inbound_default_policy  = "drop"
   outbound_default_policy = "accept"
+  external_rules = true
+}
 
+resource "scaleway_instance_security_group_rules" "headscale" {
+  security_group_id = scaleway_instance_security_group.headscale.id
   inbound_rule {
     action = "accept"
     port   = "22"
+    ip_range  = "::/0" 
+    protocol = "TCP"
   }
 
   inbound_rule {
     action = "accept"
     port   = "443"
+    ip_range  = "::/0"
+    protocol = "TCP"
   }
 }
 
