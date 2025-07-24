@@ -1,22 +1,41 @@
 resource "scaleway_iam_application" "truenas" {
-  name        = "TrueNAS"
-  description = "Application for TrueNAS to access Scaleway resources."
+  name            = "TrueNAS"
+  description     = "Application for TrueNAS to access Scaleway resources."
   organization_id = var.organization_id
 }
 
-resource scaleway_iam_policy "truenas_manage_s3" {
-  name           = "TrueNAS S3 Management Policy"
-  description    = "Gives TrueNAS permissions to upload/download objects in the S3 bucket."
-  application_id = scaleway_iam_application.truenas.id
+resource "scaleway_iam_policy" "truenas_manage_s3" {
+  name            = "TrueNAS S3 Management Policy"
+  description     = "Gives TrueNAS permissions to upload/download objects in the S3 bucket."
+  application_id  = scaleway_iam_application.truenas.id
   organization_id = var.organization_id
   rule {
-    project_ids          = [var.project_id]
+    project_ids = [var.project_id]
     permission_set_names = [
       "ObjectStorageObjectsWrite",
       "ObjectStorageObjectsDelete",
       "ObjectStorageObjectsRead",
       "ObjectStorageBucketsRead",
       "ObjectStorageReadOnly"
+    ]
+  }
+}
+
+resource "scaleway_iam_application" "immich" {
+  name            = "Immich"
+  description     = "Application for Immich to send e-mail."
+  organization_id = var.organization_id
+}
+
+resource "scaleway_iam_policy" "immich_send_mails" {
+  name            = "Immich Mails Policy"
+  description     = "Gives Immich permission to send e-mails."
+  application_id  = scaleway_iam_application.immich.id
+  organization_id = var.organization_id
+  rule {
+    project_ids = [var.project_id]
+    permission_set_names = [
+      "TransactionalEmailEmailSmtpCreate"
     ]
   }
 }
