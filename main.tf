@@ -21,16 +21,16 @@ resource "scaleway_iam_policy" "truenas_manage_s3" {
   }
 }
 
-resource "scaleway_iam_application" "immich" {
-  name            = "Immich"
-  description     = "Application for Immich to send e-mail."
+resource "scaleway_iam_application" "truenas_mail" {
+  name            = "Mailing Apps"
+  description     = "Application for TrueNAS apps to send e-mail."
   organization_id = var.organization_id
 }
 
-resource "scaleway_iam_policy" "immich_send_mails" {
-  name            = "Immich Mails Policy"
-  description     = "Gives Immich permission to send e-mails."
-  application_id  = scaleway_iam_application.immich.id
+resource "scaleway_iam_policy" "truenas_send_mails" {
+  name            = "TrueNAS Mails Policy"
+  description     = "Gives TrueNAS apps permission to send e-mails."
+  application_id  = scaleway_iam_application.truenas_mail.id
   organization_id = var.organization_id
   rule {
     project_ids = [var.project_id]
